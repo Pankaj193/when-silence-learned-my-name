@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=UnifrakturMaguntia&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 30 15% 14%;
+    --foreground: 38 20% 70%;
+
+    --card: 38 30% 90%;
+    --card-foreground: 25 30% 12%;
+
+    --popover: 38 30% 90%;
+    --popover-foreground: 25 30% 12%;
+
+    --primary: 25 45% 20%;
+    --primary-foreground: 39 35% 93%;
+
+    --secondary: 35 25% 82%;
+    --secondary-foreground: 25 30% 12%;
+
+    --muted: 36 20% 86%;
+    --muted-foreground: 25 15% 45%;
+
+    --accent: 32 60% 45%;
+    --accent-foreground: 39 35% 93%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 33 20% 75%;
+    --input: 33 20% 75%;
+    --ring: 25 45% 20%;
+
+    --radius: 0.25rem;
+
+    /* Custom newspaper tokens */
+    --ink: 35 15% 72%;
+    --ink-light: 30 12% 58%;
+    --ink-faint: 28 8% 45%;
+    --paper: 30 15% 14%;
+    --paper-dark: 28 12% 11%;
+    --paper-warm: 32 18% 16%;
+    --sunlight: 40 50% 40%;
+    --sunlight-glow: 38 55% 50%;
+    --sepia-overlay: 33 30% 30%;
+
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'Lora', serif;
+    --font-masthead: 'UnifrakturMaguntia', serif;
+
+    --shadow-paper: 0 2px 15px -3px hsl(25 30% 12% / 0.08);
+    --shadow-deep: 0 8px 30px -5px hsl(25 30% 12% / 0.15);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  /* Paper texture overlay */
+  .paper-texture {
+    position: relative;
+  }
+  .paper-texture::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(ellipse at 20% 50%, hsl(var(--sunlight) / 0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, hsl(var(--sunlight-glow) / 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .paper-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  /* Newspaper rule lines */
+  .newspaper-rule {
+    border-top: 1px solid hsl(var(--ink) / 0.2);
+    border-bottom: 3px double hsl(var(--ink) / 0.2);
+    padding: 4px 0;
+  }
+
+  .newspaper-rule-thin {
+    border-bottom: 1px solid hsl(var(--ink) / 0.15);
+  }
+
+  /* Column layout */
+  .newspaper-columns {
+    column-count: 2;
+    column-gap: 2.5rem;
+    column-rule: 1px solid hsl(var(--ink) / 0.1);
+  }
+
+  @media (min-width: 768px) {
+    .newspaper-columns-3 {
+      column-count: 3;
+      column-gap: 2rem;
+      column-rule: 1px solid hsl(var(--ink) / 0.1);
+    }
+  }
+
+  /* Ink stain decorative element */
+  .ink-stain {
+    position: relative;
+  }
+  .ink-stain::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--ink) / 0.03) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Special emphasis for key moments */
+  .moment-emphasis {
+    position: relative;
+    display: inline-block;
+  }
+  .moment-emphasis::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: hsl(var(--ink) / 0.3);
+  }
+
+  /* Masthead styling */
+  .masthead {
+    font-family: var(--font-masthead);
+    color: hsl(var(--ink));
+    letter-spacing: 0.02em;
+  }
+
+  /* Drop cap */
+  .drop-cap::first-letter {
+    font-family: var(--font-display);
+    float: left;
+    font-size: 4em;
+    line-height: 0.8;
+    padding-right: 0.1em;
+    padding-top: 0.05em;
+    color: hsl(var(--ink));
+    font-weight: 700;
+  }
+}
+
+@layer utilities {
+  .text-ink {
+    color: hsl(var(--ink));
+  }
+  .text-ink-light {
+    color: hsl(var(--ink-light));
+  }
+  .text-ink-faint {
+    color: hsl(var(--ink-faint));
+  }
+  .bg-paper {
+    background-color: hsl(var(--paper));
+  }
+  .bg-paper-dark {
+    background-color: hsl(var(--paper-dark));
+  }
+  .bg-paper-warm {
+    background-color: hsl(var(--paper-warm));
+  }
+}
